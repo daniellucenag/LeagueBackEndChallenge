@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace LeagueBackEndChallenge
 {
@@ -14,26 +15,36 @@ namespace LeagueBackEndChallenge
             StreamReader reader = null;
             if (File.Exists(fileData.FilePath))
             {
-                reader = new StreamReader(File.OpenRead(fileData.FilePath));
+                string[] rows = File.ReadAllLines(fileData.FilePath);
+                fileData.StartRowData(rows.Length);
+               // int[][] jaggedArray = new int[rows.Length][];
 
-                IList<RowData> linesData = new List<RowData>();
-
-                while (!reader.EndOfStream)
+                for (int i = 0; i < rows.Length; i++)
                 {
+
+
+                    string[] strArray = rows[i].Split(',');
+                    fileData.SetNumberOfColumns(strArray.Length);
+                    int[] intArray = Array.ConvertAll(strArray, int.Parse);
+                    fileData.AddRowData(i,intArray);
+                    //jaggedArray[i] = intArray;
+
+                    /*
                     var lineData = new RowData();
                     var lineString = reader.ReadLine();
                     var lineSplited = lineString.Split(',');
+                    fileData.SetNumberOfColumns(lineSplited.Length);
                     foreach (var item in lineSplited)
                     {
                         lineData.AddItem(int.Parse(item));
                     }
-                    linesData.Add(lineData);
+                    fileData.AddRowData(lineData);
+                    */
                 }
-
-                foreach (var dataToPrint in linesData)
-                {
-                    Console.WriteLine(dataToPrint.PrintRowData());
-                }
+                //string result = string.Join(", ", jaggedArray[0]);
+                //Console.WriteLine(result);//0,1,2,3
+                Console.WriteLine(fileData.EchoRow());
+                fileData.EchoInvert();
             }
             else
             {
@@ -48,44 +59,67 @@ namespace LeagueBackEndChallenge
         public string FilePath { protected set; get; }
         public int NumberOfColumns { protected set; get; }
         public int NumberOfRows { protected set; get; }
-        public List<RowData> Rows { protected set; get; }
+        public int[][] Rows { protected set; get; }
 
         public FileData(string filePath)
         {
             FilePath = filePath;
             NumberOfColumns = 0;
             NumberOfRows = 0;
+            //Rows = new List<RowData>();
         }
 
-        public void IncremmentRow() => NumberOfRows++;
+        public void IncrementRow() => NumberOfRows++;
 
-        public void IncrementColumn() => NumberOfColumns++;
-
-        public void AddRowData(RowData rowData)
+        public void SetNumberOfColumns(int numberOfColumns)
         {
-            Rows.Add(rowData);
+            NumberOfColumns = numberOfColumns;
         }
-    }
 
-    public class RowData
-    {  
-        public List<int> Items { protected set; get; }
-
-        public RowData()
+        public void StartRowData(int size)
         {
-            Items = new List<int>();
+            Rows = new int[size][];
         }
 
-        public string PrintRowData()
+        public void AddRowData(int position, int[] data)
         {
-            return string.Join(",", Items);
+            Rows[position] = data;
+            IncrementRow();
         }
 
-        public void AddItem(int item)
+        public string EchoRow()
         {
-            this.Items.Add(item);
-        }
-    }
+            var stringToPrint = new StringBuilder();
+            for (int row = 0; row < Rows.Length; row++)
+            {
+                stringToPrint.Append(string.Join(",", Rows[row])+"\n");
 
-   
+            }
+            return stringToPrint.ToString();
+        }
+
+        public void EchoInvert()
+        {
+            int[,] elementsForPrint = new int[NumberOfRows,NumberOfColumns];
+
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                for(int column = 0; column < NumberOfColumns; column++)
+                {
+                    elementsForPrint[row,column] = Rows[column][row];
+                }
+            }
+
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                for (int column = 0; column < NumberOfColumns; column++)
+                {
+                    Console.Write(string.Format("{0},", elementsForPrint[row, column]));
+                }
+                Console.Write(Environment.NewLine);
+            }
+
+        }
+        
+    }  
 }
