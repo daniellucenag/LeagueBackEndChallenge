@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace LeagueBackEndChallenge
@@ -12,39 +11,22 @@ namespace LeagueBackEndChallenge
         {
             var fileData = new FileData(@"C:\Users\Daniel\Downloads\matrix.csv");
 
-            StreamReader reader = null;
             if (File.Exists(fileData.FilePath))
             {
                 string[] rows = File.ReadAllLines(fileData.FilePath);
                 fileData.StartRowData(rows.Length);
-               // int[][] jaggedArray = new int[rows.Length][];
 
                 for (int i = 0; i < rows.Length; i++)
                 {
-
-
                     string[] strArray = rows[i].Split(',');
                     fileData.SetNumberOfColumns(strArray.Length);
                     int[] intArray = Array.ConvertAll(strArray, int.Parse);
                     fileData.AddRowData(i,intArray);
-                    //jaggedArray[i] = intArray;
-
-                    /*
-                    var lineData = new RowData();
-                    var lineString = reader.ReadLine();
-                    var lineSplited = lineString.Split(',');
-                    fileData.SetNumberOfColumns(lineSplited.Length);
-                    foreach (var item in lineSplited)
-                    {
-                        lineData.AddItem(int.Parse(item));
-                    }
-                    fileData.AddRowData(lineData);
-                    */
                 }
-                //string result = string.Join(", ", jaggedArray[0]);
-                //Console.WriteLine(result);//0,1,2,3
+                
                 Console.WriteLine(fileData.EchoRow());
                 Console.WriteLine(fileData.EchoInvert());
+                Console.WriteLine(fileData.EchoFlatten());
             }
             else
             {
@@ -66,7 +48,6 @@ namespace LeagueBackEndChallenge
             FilePath = filePath;
             NumberOfColumns = 0;
             NumberOfRows = 0;
-            //Rows = new List<RowData>();
         }
 
         public void IncrementRow() => NumberOfRows++;
@@ -92,7 +73,7 @@ namespace LeagueBackEndChallenge
             var stringToPrint = new StringBuilder();
             for (int row = 0; row < Rows.Length; row++)
             {
-                stringToPrint.Append(string.Join(",", Rows[row])+"\n");
+                stringToPrint.Append(string.Join(",", Rows[row]) + "\n");
             }
             return stringToPrint.ToString();
         }
@@ -100,16 +81,16 @@ namespace LeagueBackEndChallenge
         public string EchoInvert()
         {
             string[] elementsForPrint = new string[NumberOfRows];
-            int[] arrayTest;
+            int[] lineArray;
 
-            for (int row = 0; row <  NumberOfRows; row++)
+            for (int row = 0; row < NumberOfRows; row++)
             {
-                arrayTest = new int[NumberOfColumns];
-                for(int column = 0; column < NumberOfColumns; column++)
+                lineArray = new int[NumberOfColumns];
+                for (int column = 0; column < NumberOfColumns; column++)
                 {
-                    arrayTest[column] = Rows[column][row];
+                    lineArray[column] = Rows[column][row];
                 }
-                elementsForPrint[row] = string.Join(",", arrayTest);
+                elementsForPrint[row] = string.Join(",", lineArray);
             }
 
             var stringToPrint = new StringBuilder();
@@ -120,5 +101,21 @@ namespace LeagueBackEndChallenge
             }
             return stringToPrint.ToString();
         }
+
+        public string EchoFlatten()
+        {
+            var stringToPrint = new StringBuilder();
+            List<int> lineList = new List<int>();
+            for (int row = 0; row < Rows.Length; row++)
+            {
+                for (int i = 0; i < Rows[row].Length; i++)
+                {
+                    lineList.Add(Rows[row][i]);
+                }
+            }
+            return stringToPrint.Append(string.Join(",", lineList)).ToString();
+        }
+    
+
     }  
 }
