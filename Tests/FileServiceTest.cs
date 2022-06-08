@@ -29,5 +29,13 @@ namespace Tests
 
             Assert.Contains("File is not valid, must be a csv with same number of columns and rows.", ex.Message);
         }
+
+        [Fact]
+        public void ShouldPrintRowAsMatrixSuccess()
+        {
+            FileService.LoadFile("matrix.csv");
+            var result = FileService.GetRow();
+            Assert.Equal(result, $"1,2,3\n4,5,6\n7,8,9\n");
+        }
     }
 }
