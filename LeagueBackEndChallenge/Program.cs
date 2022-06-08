@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace LeagueBackEndChallenge
@@ -27,6 +28,8 @@ namespace LeagueBackEndChallenge
                 Console.WriteLine(fileData.EchoRow());
                 Console.WriteLine(fileData.EchoInvert());
                 Console.WriteLine(fileData.EchoFlatten());
+                Console.WriteLine(fileData.EchoSum());
+                Console.WriteLine(fileData.EchoMultiPly());
             }
             else
             {
@@ -41,6 +44,8 @@ namespace LeagueBackEndChallenge
         public string FilePath { protected set; get; }
         public int NumberOfColumns { protected set; get; }
         public int NumberOfRows { protected set; get; }
+
+        public List<int> LineList { protected set; get; }
         public int[][] Rows { protected set; get; }
 
         public FileData(string filePath)
@@ -48,6 +53,7 @@ namespace LeagueBackEndChallenge
             FilePath = filePath;
             NumberOfColumns = 0;
             NumberOfRows = 0;
+            LineList = new List<int>();
         }
 
         public void IncrementRow() => NumberOfRows++;
@@ -66,6 +72,18 @@ namespace LeagueBackEndChallenge
         {
             Rows[position] = data;
             IncrementRow();
+        }
+
+        private void FillLineList()
+        {
+            LineList = new List<int>();
+            for (int row = 0; row < Rows.Length; row++)
+            {
+                for (int i = 0; i < Rows[row].Length; i++)
+                {
+                    LineList.Add(Rows[row][i]);
+                }
+            }
         }
 
         public string EchoRow()
@@ -104,18 +122,27 @@ namespace LeagueBackEndChallenge
 
         public string EchoFlatten()
         {
-            var stringToPrint = new StringBuilder();
-            List<int> lineList = new List<int>();
-            for (int row = 0; row < Rows.Length; row++)
-            {
-                for (int i = 0; i < Rows[row].Length; i++)
-                {
-                    lineList.Add(Rows[row][i]);
-                }
-            }
-            return stringToPrint.Append(string.Join(",", lineList)).ToString();
+            if (!LineList.Any())
+                FillLineList();
+
+            var stringToPrint = new StringBuilder();       
+            return stringToPrint.Append(string.Join(",", LineList)).ToString();
         }
     
+        public int EchoSum()
+        {
+            if (!LineList.Any())
+                FillLineList();
 
+            return LineList.Sum();
+        }
+
+        public double EchoMultiPly()
+        {
+            if (!LineList.Any())
+                FillLineList();
+
+           return LineList.Aggregate((a, x) => a * x);
+        }
     }  
 }
