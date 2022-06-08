@@ -16,12 +16,11 @@ namespace LeagueBackEndChallenge
             }
         }
 
-
         private static bool MainMenu()
         {
             Console.Clear();
             Console.WriteLine("Choose an option:");
-            Console.WriteLine("1) Load your file");
+            Console.WriteLine(string.IsNullOrEmpty(FileService.FilePath) ? "1) Load your file" : $"1) - FILE LOADED - {FileService.FilePath} press 1 to load other file");
             Console.WriteLine("2) EchoRow");
             Console.WriteLine("3) Exit");
             Console.Write("\r\nSelect an option: ");
@@ -32,7 +31,7 @@ namespace LeagueBackEndChallenge
                     LoadFile();
                     return true;
                 case "2":
-                    //RemoveWhitespace();
+                    EchoRow();
                     return true;
                 case "3":
                     return false;
@@ -44,7 +43,7 @@ namespace LeagueBackEndChallenge
         public static void LoadFile()
         {
             Console.Clear();
-            Console.Write("LoadFile");
+            Console.WriteLine("LoadFile");
 
             try
             {
@@ -52,15 +51,27 @@ namespace LeagueBackEndChallenge
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message);
+                Console.WriteLine(ex.Message);
             }
-
+            finally
+            {
+                Console.ReadLine();
+            }
         }
 
         private static string CaptureInput()
         {
             Console.Write("Enter the entire filepath of your file ex: 'C://Users/YourName/Downloads/file.csv': ");
             return Console.ReadLine();
+        }
+
+        private static void EchoRow()
+        {
+            if (string.IsNullOrEmpty(FileService.FilePath))
+            {
+                Console.WriteLine("You must load a file before. Press enter to return to main menu.");
+                Console.ReadLine();
+            }
         }
     }
 }

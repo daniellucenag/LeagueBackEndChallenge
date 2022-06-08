@@ -25,7 +25,7 @@ namespace LeagueBackEndChallenge
             //var fileData = new FileData(@"C:\Users\Daniel\Downloads\matrix.csv");
 
             if (!File.Exists(path))
-                throw new Exception("File doesn't exist");
+                throw new Exception("File doesn't exist, press enter to return to main menu.");
                         
             try
             {
@@ -44,9 +44,9 @@ namespace LeagueBackEndChallenge
                 if (!ValidFile)
                     throw new Exception("File is not valid, must be a csv with same number of columns and rows.");                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
         }
