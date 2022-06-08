@@ -23,6 +23,7 @@ namespace LeagueBackEndChallenge
 
         public static void LoadFile(string path)
         {
+            //TODO: Remove this line
             //var fileData = new FileData(@"C:\Users\Daniel\Downloads\matrix.csv");
 
             if (!File.Exists(path))

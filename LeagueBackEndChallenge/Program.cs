@@ -52,11 +52,8 @@ namespace LeagueBackEndChallenge
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            finally
-            {
                 Console.ReadLine();
-            }
+            }            
         }
 
         private static string CaptureInput()
@@ -67,18 +64,23 @@ namespace LeagueBackEndChallenge
 
         private static void EchoRow()
         {
-            ValidateFile();
-
-
+            if (ValidateFile())
+            {
+                Console.WriteLine("EchoRow return the matrix as string in matrix format: ");
+                Console.WriteLine(FileService.GetRow());
+                Console.ReadLine();
+            }
         }
 
-        private static void ValidateFile()
+        private static bool ValidateFile()
         {
             if (string.IsNullOrEmpty(FileService.FilePath))
             {
                 Console.WriteLine("You must load a file before. Press enter to return to main menu.");
                 Console.ReadLine();
+                return false;
             }
+            return true;
         }
     }
 }

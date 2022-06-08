@@ -23,7 +23,7 @@ namespace Tests
         }
 
         [Fact]
-        public void ShouldLoadFIleInvalidFileContent()
+        public void ShouldLoadFileInvalidFileContent()
         {
             var ex = Assert.Throws<Exception>(() => FileService.LoadFile("matrixInvalid.csv"));
 
