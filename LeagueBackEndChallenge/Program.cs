@@ -67,6 +67,13 @@ namespace LeagueBackEndChallenge
 
         private static void EchoRow()
         {
+            ValidateFile();
+
+
+        }
+
+        private static void ValidateFile()
+        {
             if (string.IsNullOrEmpty(FileService.FilePath))
             {
                 Console.WriteLine("You must load a file before. Press enter to return to main menu.");

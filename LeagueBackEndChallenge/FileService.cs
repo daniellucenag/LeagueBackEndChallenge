@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace LeagueBackEndChallenge
 {
@@ -48,7 +49,6 @@ namespace LeagueBackEndChallenge
             {
                 throw;
             }
-
         }
         private static void SetFilePath(string filePath)
         {
@@ -70,6 +70,15 @@ namespace LeagueBackEndChallenge
 
         private static void IncrementRow() => NumberOfRows++;
 
+        public static string GetRow()
+        {
+            var stringToPrint = new StringBuilder();
+            for (int row = 0; row < Rows.Length; row++)
+            {
+                stringToPrint.Append(string.Join(",", Rows[row]) + "\n");
+            }
+            return stringToPrint.ToString();
+        }
         public static string GetFlatten()
         {
             throw new NotImplementedException();
@@ -85,16 +94,9 @@ namespace LeagueBackEndChallenge
             throw new NotImplementedException();
         }
 
-        public static string GetRow()
-        {
-            throw new NotImplementedException();
-        }
-
         public static string GetSum()
         {
             throw new NotImplementedException();
         }
-
-               
     }
 }

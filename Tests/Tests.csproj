@@ -13,4 +13,17 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LeagueBackEndChallenge\LeagueBackEndChallenge.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="matrixInvalid.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="matrix.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
