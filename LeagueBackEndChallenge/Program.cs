@@ -44,7 +44,7 @@ namespace LeagueBackEndChallenge
                 //string result = string.Join(", ", jaggedArray[0]);
                 //Console.WriteLine(result);//0,1,2,3
                 Console.WriteLine(fileData.EchoRow());
-                fileData.EchoInvert();
+                Console.WriteLine(fileData.EchoInvert());
             }
             else
             {
@@ -93,33 +93,32 @@ namespace LeagueBackEndChallenge
             for (int row = 0; row < Rows.Length; row++)
             {
                 stringToPrint.Append(string.Join(",", Rows[row])+"\n");
-
             }
             return stringToPrint.ToString();
         }
 
-        public void EchoInvert()
+        public string EchoInvert()
         {
-            int[,] elementsForPrint = new int[NumberOfRows,NumberOfColumns];
+            string[] elementsForPrint = new string[NumberOfRows];
+            int[] arrayTest;
 
-            for (int row = 0; row < NumberOfRows; row++)
+            for (int row = 0; row <  NumberOfRows; row++)
             {
+                arrayTest = new int[NumberOfColumns];
                 for(int column = 0; column < NumberOfColumns; column++)
                 {
-                    elementsForPrint[row,column] = Rows[column][row];
+                    arrayTest[column] = Rows[column][row];
                 }
+                elementsForPrint[row] = string.Join(",", arrayTest);
             }
 
-            for (int row = 0; row < NumberOfRows; row++)
+            var stringToPrint = new StringBuilder();
+            for (int row = 0; row < elementsForPrint.Length; row++)
             {
-                for (int column = 0; column < NumberOfColumns; column++)
-                {
-                    Console.Write(string.Format("{0},", elementsForPrint[row, column]));
-                }
-                Console.Write(Environment.NewLine);
-            }
+                stringToPrint.Append(string.Join(",", elementsForPrint[row]) + "\n");
 
+            }
+            return stringToPrint.ToString();
         }
-        
     }  
 }
