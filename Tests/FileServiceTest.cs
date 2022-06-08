@@ -31,6 +31,14 @@ namespace Tests
         }
 
         [Fact]
+        public void ShouldLoadFileInvalidFileContentNotNumbers()
+        {
+            var ex = Assert.Throws<Exception>(() => FileService.LoadFile("matrixInvalidNotNumbers.csv"));
+
+            Assert.Contains("Not all elements of the file are numbers, must be csv with only numbers.", ex.Message);
+        }
+
+        [Fact]
         public void ShouldPrintRowAsMatrixSuccess()
         {
             FileService.LoadFile("matrix.csv");

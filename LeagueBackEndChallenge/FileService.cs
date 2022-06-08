@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace LeagueBackEndChallenge
@@ -38,9 +39,17 @@ namespace LeagueBackEndChallenge
                 for (int i = 0; i < rows.Length; i++)
                 {
                     string[] strArray = rows[i].Split(',');
-                    SetNumberOfColumns(strArray.Length);
+
+                    var stringline = rows[i];
+
+                    if (!stringline.Replace(",","").All(char.IsDigit))
+                        throw new Exception("Not all elements of the file are numbers, must be csv with only numbers.");
+                                        
                     int[] intArray = Array.ConvertAll(strArray, int.Parse);
                     AddRowData(i, intArray);
+
+                    SetNumberOfColumns(strArray.Length);
+                    SetNumberOfRows(rows.Length);
                 }
 
                 if (!ValidFile)
@@ -48,12 +57,18 @@ namespace LeagueBackEndChallenge
             }
             catch (Exception)
             {
+                ClearFilePath();
                 throw;
             }
         }
         private static void SetFilePath(string filePath)
         {
             FilePath = filePath;
+        }
+
+        private static void ClearFilePath()
+        {
+            FilePath = null;
         }
         public static void StartRowData(int size)
         {
@@ -63,13 +78,16 @@ namespace LeagueBackEndChallenge
         {
             NumberOfColumns = numberOfColumns;
         }
-        public static void AddRowData(int position, int[] data)
+
+        private static void SetNumberOfRows(int numberOfRows)
         {
-            Rows[position] = data;
-            IncrementRow();
+            NumberOfRows = numberOfRows;
         }
 
-        private static void IncrementRow() => NumberOfRows++;
+        public static void AddRowData(int position, int[] data)
+        {
+            Rows[position] = data;            
+        }
 
         public static string GetRow()
         {
