@@ -45,5 +45,37 @@ namespace Tests
             var result = FileService.GetRow();
             Assert.Equal(result, $"1,2,3\n4,5,6\n7,8,9\n");
         }
+
+        [Fact]
+        public void ShouldPrintRowsAsMatrixInvertedSuccess()
+        {
+            FileService.LoadFile("matrix.csv");
+            var result = FileService.GetInvert();
+            Assert.Equal(result, $"1,4,7\n2,5,8\n3,6,9\n");
+        }
+
+        [Fact]
+        public void ShouldPrintRowsAsMatrixFlattenSuccess()
+        {
+            FileService.LoadFile("matrix.csv");
+            var result = FileService.GetFlatten();
+            Assert.Equal(result, $"1,2,3,4,5,6,7,8,9");
+        }
+
+        [Fact]
+        public void ShouldPrintSumOfMatrixElements()
+        {
+            FileService.LoadFile("matrix.csv");
+            var result = FileService.GetSum();
+            Assert.Equal(45, result);
+        }
+
+        [Fact]
+        public void ShouldPrintMultiplyOfMatrixElements()
+        {
+            FileService.LoadFile("matrix.csv");
+            var result = FileService.GetMultiply();
+            Assert.Equal(362880, result);
+        }
     }
 }

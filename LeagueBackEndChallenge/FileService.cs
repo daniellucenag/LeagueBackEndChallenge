@@ -22,6 +22,11 @@ namespace LeagueBackEndChallenge
             LineList = new List<int>();
         }
 
+        /// <summary>
+        /// load the file 
+        /// </summary>
+        /// <param name="path">the path of the file</param>
+        /// <exception cref="Exception">basic exception handle</exception>
         public static void LoadFile(string path)
         {
             //TODO: Remove this line
@@ -89,6 +94,10 @@ namespace LeagueBackEndChallenge
             Rows[position] = data;            
         }
 
+        /// <summary>
+        /// matrix in string format as given
+        /// </summary>
+        /// <returns>string</returns>
         public static string GetRow()
         {
             var stringToPrint = new StringBuilder();
@@ -98,24 +107,85 @@ namespace LeagueBackEndChallenge
             }
             return stringToPrint.ToString();
         }
-        public static string GetFlatten()
-        {
-            throw new NotImplementedException();
-        }
 
+        /// <summary>
+        /// return columns and rows of the matrix inverted
+        /// </summary>
+        /// <returns>string</returns>
         public static string GetInvert()
         {
-            throw new NotImplementedException();
+            string[] elementsForPrint = new string[NumberOfRows];
+            int[] lineArray;
+
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                lineArray = new int[NumberOfColumns];
+                for (int column = 0; column < NumberOfColumns; column++)
+                {
+                    lineArray[column] = Rows[column][row];
+                }
+                elementsForPrint[row] = string.Join(",", lineArray);
+            }
+
+            var stringToPrint = new StringBuilder();
+            for (int row = 0; row < elementsForPrint.Length; row++)
+            {
+                stringToPrint.Append(string.Join(",", elementsForPrint[row]) + "\n");
+
+            }
+            return stringToPrint.ToString();
         }
 
-        public static string GetMultiply()
+        /// <summary>
+        /// return the matrix as 1 line
+        /// </summary>
+        /// <returns>string</returns>
+        public static string GetFlatten()
         {
-            throw new NotImplementedException();
+            if (!LineList.Any())
+                FillLineList();
+
+            var stringToPrint = new StringBuilder();
+            return stringToPrint.Append(string.Join(",", LineList)).ToString();
         }
 
-        public static string GetSum()
+        /// <summary>
+        /// get the product of all elements of the matrix
+        /// </summary>
+        /// <returns>double</returns>
+        public static double GetMultiply()
         {
-            throw new NotImplementedException();
+            if (!LineList.Any())
+                FillLineList();
+
+            return LineList.Aggregate((a, x) => a * x);
+        }
+
+        /// <summary>
+        /// sum all elements of the matrix
+        /// </summary>
+        /// <returns>double</returns>
+        public static double GetSum()
+        {
+            if (!LineList.Any())
+                FillLineList();
+
+            return LineList.Sum();
+        }
+
+        /// <summary>
+        /// Fill the LineList with all numbers of the matrix
+        /// </summary>
+        private static void FillLineList()
+        {
+            LineList = new List<int>();
+            for (int row = 0; row < Rows.Length; row++)
+            {
+                for (int i = 0; i < Rows[row].Length; i++)
+                {
+                    LineList.Add(Rows[row][i]);
+                }
+            }
         }
     }
 }

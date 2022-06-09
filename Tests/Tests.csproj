@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="matrix5x5.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="matrixInvalidNotNumbers.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
