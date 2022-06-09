@@ -89,10 +89,10 @@ namespace LeagueBackEndChallenge
             if (!LineList.Any())
                 FillLineList();
 
-            var stringToPrint = new StringBuilder();       
+            var stringToPrint = new StringBuilder();
             return stringToPrint.Append(string.Join(",", LineList)).ToString();
         }
-    
+
         public int EchoSum()
         {
             if (!LineList.Any())
@@ -106,7 +106,7 @@ namespace LeagueBackEndChallenge
             if (!LineList.Any())
                 FillLineList();
 
-           return LineList.Aggregate((a, x) => a * x);
+            return LineList.Aggregate((a, x) => a * x);
         }
-    }  
+    }
 }

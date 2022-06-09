@@ -34,7 +34,7 @@ namespace LeagueBackEndChallenge
 
             if (!File.Exists(path))
                 throw new Exception("File doesn't exist, press enter to return to main menu.");
-                        
+
             try
             {
                 SetFilePath(path);
@@ -47,9 +47,9 @@ namespace LeagueBackEndChallenge
 
                     var stringline = rows[i];
 
-                    if (!stringline.Replace(",","").All(char.IsDigit))
+                    if (!stringline.Replace(",", "").All(char.IsDigit))
                         throw new Exception("Not all elements of the file are numbers, must be csv with only numbers.");
-                                        
+
                     int[] intArray = Array.ConvertAll(strArray, int.Parse);
                     AddRowData(i, intArray);
 
@@ -58,7 +58,7 @@ namespace LeagueBackEndChallenge
                 }
 
                 if (!ValidFile)
-                    throw new Exception("File is not valid, must be a csv with same number of columns and rows.");                
+                    throw new Exception("File is not valid, must be a csv with same number of columns and rows.");
             }
             catch (Exception)
             {
@@ -91,7 +91,7 @@ namespace LeagueBackEndChallenge
 
         public static void AddRowData(int position, int[] data)
         {
-            Rows[position] = data;            
+            Rows[position] = data;
         }
 
         /// <summary>

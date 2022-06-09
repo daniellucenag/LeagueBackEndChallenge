@@ -4,7 +4,7 @@ namespace LeagueBackEndChallenge
 {
     internal class Program
     {
-       
+
         public static void Main(string[] args)
         {
             bool showMenu = true;
@@ -67,7 +67,7 @@ namespace LeagueBackEndChallenge
             {
                 Console.WriteLine(ex.Message);
                 Console.ReadLine();
-            }            
+            }
         }
 
         private static string CaptureInput()
