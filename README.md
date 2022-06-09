@@ -9,3 +9,5 @@ Jus open the solution project on visual studio, select LeagueBackEndProject (Rig
 # How To Use
 
 Its an CSV reader (accepts csv with a matrix of integer with same numbers of rows and columns), the main menu shows the options to read the file and etc.
+
+![image](https://user-images.githubusercontent.com/13907753/172901586-4eb243a0-b082-404b-bed7-8cce608711d7.png)
